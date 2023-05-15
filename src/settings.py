@@ -1,0 +1,2 @@
+HASH_EXTENSION = '.hash'
+PACKAGE_EXTENSION = '.zip'
