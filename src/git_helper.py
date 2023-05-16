@@ -3,7 +3,7 @@ import shutil
 import zipfile
 from settings import EXTRACT_PATH
 from secrets import GIT_USER_NAME, GIT_PASSWORD, GIT_REPO_URL
-from dulwich.porcelain import clone, status, branch_create, add, push, commit, open_repo
+from dulwich.porcelain import clone, status, branch_create, add
 
 
 class GitHelper:
@@ -28,7 +28,6 @@ class GitHelper:
         self.__extract_package(package, local_path)
 
         print(f'Adding package from {local_path} to repo')
-        os.chdir(local_path)
         add(local_path, local_path)
         rst = status(local_path)
         print(rst)
