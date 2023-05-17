@@ -3,7 +3,9 @@ import shutil
 import zipfile
 from settings import EXTRACT_PATH
 from secrets import GIT_USER_NAME, GIT_PASSWORD, GIT_REPO_URL
-from dulwich.porcelain import clone, status, branch_create, add
+from dulwich.porcelain import clone, commit, branch_create, push
+
+from git_helper2 import GitHelper2
 
 
 class GitHelper:
@@ -28,11 +30,12 @@ class GitHelper:
         self.__extract_package(package, local_path)
 
         print(f'Adding package from {local_path} to repo')
-        add(local_path, local_path)
-        rst = status(local_path)
-        print(rst)
-        # add(local_path, paths=local_path)
-        #commit(repo, 'A sample commit')
+
+        # TODO: Workaround for https://github.com/jelmer/dulwich/issues/1178
+        git2 = GitHelper2()
+        git2.chechout(local_path, branch_name)
+        git2.add_all(local_path)
+        git2.commit(local_path, 'A sample commit')
         # push(local_path, GIT_REPO_URL, username=GIT_USER_NAME, password=GIT_PASSWORD)
         pass
 
